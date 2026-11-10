@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Deteksi Kebakaran Dini</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- MQTT.js -->
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div>
+            <h1>🔥 DETEKSI KEBAKARAN DINI</h1>
+
+            <p>
+                Monitoring kondisi lingkungan secara realtime
+                menggunakan ESP32 dan MQTT
+            </p>
+        </div>
+
+        <div id="connectionStatus"
+             class="connection disconnected">
+
+            MQTT DISCONNECTED
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+        <!-- STATUS UTAMA -->
+
+        <section class="status-card">
+
+            <div>
+
+                <p class="label">
+                    STATUS SISTEM
+                </p>
+
+                <h2 id="systemStatus">
+                    MENUNGGU DATA
+                </h2>
+
+                <p id="lastUpdate">
+                    Belum ada data
+                </p>
+
+            </div>
+
+
+            <div id="statusIcon"
+                 class="status-icon">
+
+                ?
+
+            </div>
+
+        </section>
+
+
+        <!-- PARAMETER -->
+
+        <section class="grid">
+
+            <!-- SUHU -->
+
+            <div class="card">
+
+                <div class="card-title">
+                    🌡️ Suhu
+                </div>
+
+                <div class="value">
+                    <span id="temperature">
+                        --
+                    </span>
+
+                    <span class="unit">
+                        °C
+                    </span>
+                </div>
+
+                <div class="progress">
+                    <div id="temperatureBar"
+                         class="progress-fill">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- KELEMBAPAN -->
+
+            <div class="card">
+
+                <div class="card-title">
+                    💧 Kelembapan
+                </div>
+
+                <div class="value">
+
+                    <span id="humidity">
+                        --
+                    </span>
+
+                    <span class="unit">
+                        %
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <div id="humidityBar"
+                         class="progress-fill">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ASAP -->
+
+            <div class="card">
+
+                <div class="card-title">
+                    💨 Asap / Gas
+                </div>
+
+                <div class="value">
+
+                    <span id="smoke">
+                        --
+                    </span>
+
+                    <span class="unit">
+                        ADC
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <div id="smokeBar"
+                         class="progress-fill">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- API -->
+
+            <div class="card">
+
+                <div class="card-title">
+                    🔥 Flame Sensor
+                </div>
+
+                <div id="fireStatus"
+                     class="sensor-status">
+
+                    MENUNGGU
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- AKTUATOR -->
+
+        <section class="actuator-card">
+
+            <div>
+
+                <p class="label">
+                    STATUS AKTUATOR
+                </p>
+
+                <h2 id="actuatorStatus">
+                    OFF
+                </h2>
+
+            </div>
+
+
+            <div class="actuator-items">
+
+                <div class="actuator-item">
+
+                    <span>
+                        🟢 LED Hijau
+                    </span>
+
+                    <strong id="greenLed">
+                        OFF
+                    </strong>
+
+                </div>
+
+
+                <div class="actuator-item">
+
+                    <span>
+                        🔴 LED Merah
+                    </span>
+
+                    <strong id="redLed">
+                        OFF
+                    </strong>
+
+                </div>
+
+
+                <div class="actuator-item">
+
+                    <span>
+                        🔊 Buzzer
+                    </span>
+
+                    <strong id="buzzerStatus">
+                        OFF
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- INFORMASI MQTT -->
+
+        <section class="mqtt-card">
+
+            <h2>
+                MQTT Information
+            </h2>
+
+            <div class="mqtt-info">
+
+                <p>
+                    <strong>Broker:</strong>
+                    broker.hivemq.com
+                </p>
+
+                <p>
+                    <strong>Port WebSocket:</strong>
+                    8000
+                </p>
+
+                <p>
+                    <strong>Project:</strong>
+                    Deteksi Kebakaran Dini
+                </p>
+
+                <p>
+                    <strong>Topic:</strong>
+                    deteksi_kebakaran_dini/#
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- LOG -->
+
+        <section class="log-card">
+
+            <h2>
+                System Log
+            </h2>
+
+            <div id="log">
+                Dashboard sedang menunggu koneksi MQTT...
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            Sistem Monitoring Deteksi Kebakaran Dini
+            | ESP32 + MQTT
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
